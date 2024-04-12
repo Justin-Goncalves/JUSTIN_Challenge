@@ -2,7 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+challenge_doc.text
 # C extensions
 *.so
 
