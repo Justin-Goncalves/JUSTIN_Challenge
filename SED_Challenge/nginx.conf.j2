@@ -1,0 +1,18 @@
+server {
+    listen 80 default_server;
+    server_name _;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl default_server;
+    server_name _;
+
+    ssl_certificate /etc/nginx/certificate.crt;
+    ssl_certificate_key /etc/nginx/private.key;
+
+    location / {
+        root /var/www/html;
+    }
+}

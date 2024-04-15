@@ -1,0 +1,34 @@
+---
+- name: Configure and deploy web server
+  hosts: localhost
+  connection: local
+  become: yes
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+    
+    - name: Copy SSL certificate and key
+      copy:
+        src: /path/to/your/ssl/certificate.crt
+        dest: /etc/nginx/certificate.crt
+      notify: Restart Nginx
+
+    - name: Copy SSL key
+      copy:
+        src: /path/to/your/ssl/private.key
+        dest: /etc/nginx/private.key
+      notify: Restart Nginx
+
+    - name: Configure Nginx
+      template:
+        src: nginx.conf.j2
+        dest: /etc/nginx/sites-available/default
+      notify: Restart Nginx
+
+handlers:
+  - name: Restart Nginx
+    service:
+      name: nginx
+      state: restarted
